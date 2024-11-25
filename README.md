@@ -49,3 +49,4 @@ Creation of CICD pipeline stages for the application at path - `./apps/nft-bridg
 3. Creation of dockerfile to build the docker image and push it to the ECR/ACR/DockerHub registry.
 4. IAAS using manifest.yml/.yaml/.tf to provision, configure and deploy the service using Helm charts/Pulumi (or anything of your choice) on Google/AWS/AZURE clusters.
 5. Configure/Deploy monitoring tool like ELK/New relic/Data dog /App Dynamics on Cloud cluster to monitor current status of deployed services.
+"# devops_assignment" 
