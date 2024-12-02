@@ -24,7 +24,7 @@ jobs:
            npm install
       working-directory: ./apps/nft-bridge
 
-    - name: Install Nx CLI (if needed)
+    - name: Install Nx CLI 
       run: npm install @nrwl/cli --save-dev
       working-directory: .  # Run this at the root of the project
 
@@ -53,11 +53,10 @@ jobs:
         docker --version
         sudo service docker start
 
-    - name: List files
-      run: ls -R
-
     - name: Build Docker Image
-      run: docker build -f apps/nft-bridge/Dockerfile -t nft-bridge:latest .
+      run: |
+      docker build -f apps/nft-bridge/Dockerfile -t nft-bridge:latest .
+      docker image ls
 
     # - name: Push Docker Image
     #   run: |
