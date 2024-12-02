@@ -48,6 +48,11 @@ jobs:
     #   run: npm test
     #   working-directory: ./apps/nft-bridge
 
+    - name: Ensure Docker is installed
+      run: |
+        docker --version
+        sudo service docker start
+
     - name: Build Docker Image
       run: docker build -f devops_assaingment/apps/nft-bridge/Dockerfile -t nft-bridge:latest devops_assaingment/
       working-directory: ./apps/nft-bridge
