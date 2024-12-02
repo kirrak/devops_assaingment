@@ -1,8 +1,10 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = [
     {
-      // Include configurations directly instead of using "extends"
-      plugins: ['eslint-plugin-node'], // Example plugin
+      // Define plugins as an object
+      plugins: {
+        'eslint-plugin-node': require('eslint-plugin-node'), // Correct format: plugin as an object
+      },
       rules: {
         // Place your custom rules here
       },
@@ -22,4 +24,3 @@ module.exports = [
       ],
     },
   ];
-  
