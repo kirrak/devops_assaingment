@@ -10,9 +10,6 @@ COPY ./apps/nft-bridge/package*.json ./
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code from the correct path
-COPY ./apps/nft-bridge/ ./
-
 # Expose the port your application will run on (replace with actual port if different)
 EXPOSE 3000
 
