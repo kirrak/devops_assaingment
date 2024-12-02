@@ -1,22 +1,25 @@
 /** @type {import('eslint').Linter.Config} */
-module.exports = {
-    extends: ['../../.eslintrc.json'], // Inherit from the root configuration
-  
-    ignorePatterns: ['!**/*'], // Similar to "ignorePatterns" in .eslintrc.json
-  
-    overrides: [
-      {
-        files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
-        rules: {} // You can add custom rules for all these file types if needed
+module.exports = [
+    {
+      // Include configurations directly instead of using "extends"
+      plugins: ['eslint-plugin-node'], // Example plugin
+      rules: {
+        // Place your custom rules here
       },
-      {
-        files: ['*.ts', '*.tsx'],
-        rules: {} // Custom rules for TypeScript files (if needed)
-      },
-      {
-        files: ['*.js', '*.jsx'],
-        rules: {} // Custom rules for JavaScript files (if needed)
-      }
-    ]
-  };
+      overrides: [
+        {
+          files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
+          rules: {},
+        },
+        {
+          files: ['*.ts', '*.tsx'],
+          rules: {},
+        },
+        {
+          files: ['*.js', '*.jsx'],
+          rules: {},
+        },
+      ],
+    },
+  ];
   
