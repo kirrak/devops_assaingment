@@ -55,8 +55,8 @@ jobs:
 
     - name: Build Docker Image
       run: |
-      docker build -f apps/nft-bridge/Dockerfile -t nft-bridge:latest .
-      docker image ls
+           docker build -f apps/nft-bridge/Dockerfile -t nft-bridge:latest .
+           docker image ls
 
     # - name: Push Docker Image
     #   run: |
