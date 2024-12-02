@@ -7,7 +7,7 @@
       "start": "node dist/apps/nft-bridge/main.js"
     },
     "devDependencies": {
-      "eslint": "^9.16.0",
+      "eslint": "^8.2.0", 
       "eslint-plugin-node": "^11.1.0",
       "@nrwl/cli": "^20.1.4",
       "jest": "^29.4.3",
