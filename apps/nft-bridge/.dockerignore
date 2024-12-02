@@ -1,0 +1,40 @@
+# Ignore node_modules (since they will be installed inside the container)
+node_modules/
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.swp
+
+# Ignore test-related files that aren't needed in the Docker image
+coverage/
+jest.config.js
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+
+# Ignore local configuration files that are not needed in the image
+.env
+*.local
+.DS_Store
+
+# Ignore TypeScript build output if not required
+dist/
+build/
+
+# Ignore Dockerfile and other Docker-specific files
+dockerfile
+docker-compose.yml
+
+# Ignore any IDE-specific files
+.vscode/
+.idea/
+
+# Ignore TypeScript config if not needed
+tsconfig.json
+tsconfig.app.json
+
+# Ignore package-lock.json or yarn.lock if you want to manage dependencies outside of Docker build
+package-lock.json
+yarn.lock
