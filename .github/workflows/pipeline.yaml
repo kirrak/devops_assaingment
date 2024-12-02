@@ -57,14 +57,17 @@ jobs:
       run: |
            docker run -d --name nft-bridge-container -p 3000:3000 nft-bridge-1:latest
 
+    - name: Run Docker Container
+      run: docker run -d --name nft-bridge-container -p 3000:3000 nft-bridge-1:latest
+
     - name: Wait for container to start
-      run: sleep 10  # Adjust as needed
+      run: sleep 30  # Increase wait time as needed
 
     - name: Test the Application
-      run: curl -f http://localhost:3000 || exit 1  # Replace with the actual endpoint if different
+      run: curl -f http://localhost:3000 || exit 1
 
     - name: Check Docker Container Logs
-      run: docker logs nft-bridge-container
+     run: docker logs nft-bridge-container
 
     # - name: Push Docker Image
     #   run: |
