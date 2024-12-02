@@ -55,7 +55,7 @@ jobs:
      # Run Docker Container
     - name: Run Docker Container
       run: |
-           docker run -d --name nft-bridge-container -p 3000:3000 nft-bridge:latest
+           docker run -d --name nft-bridge-container -p 3000:3000 nft-bridge-1:latest
 
     - name: Wait for container to start
       run: sleep 10  # Adjust as needed
