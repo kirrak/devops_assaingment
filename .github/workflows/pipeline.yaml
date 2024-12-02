@@ -36,12 +36,12 @@ jobs:
       working-directory: ./apps/nft-bridge
 
     - name: Install ESLint (if not already installed)
-      run: npm install eslint --save-dev
+      run: npm install eslint-plugin-node --save-dev
       working-directory: ./apps/nft-bridge
 
-    # - name: Run Code Quality Check
-    #   run: npm run lint
-    #   working-directory: ./apps/nft-bridge
+    - name: Run Code Quality Check
+      run: npm run lint
+      working-directory: ./apps/nft-bridge
 
     # - name: Run Unit Tests
     #   run: npm test
