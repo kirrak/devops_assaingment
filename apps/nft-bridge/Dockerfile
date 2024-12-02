@@ -1,20 +1,20 @@
-# Use Node.js version 16 as the base image (adjust if needed)
+# Use the official Node.js image as the base image
 FROM node:16
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
+# Copy the package.json and package-lock.json from the correct path
 COPY ./apps/nft-bridge/package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application code
-COPY ./apps/nft-bridge .
+# Copy the rest of the application code from the correct path
+COPY ./apps/nft-bridge/ ./
 
-# Expose the application's port (replace 3000 with the correct port if different)
+# Expose the port your application will run on (replace with actual port if different)
 EXPOSE 3000
 
-# Command to run the application
+# Command to run your app
 CMD ["npm", "start"]
