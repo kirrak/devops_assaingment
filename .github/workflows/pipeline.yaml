@@ -20,8 +20,7 @@ jobs:
         node-version: 18
 
     - name: Install Dependencies
-      run: |
-           npm install
+      run: npm install
       working-directory: ./apps/nft-bridge
 
     - name: Install Nx CLI 
@@ -40,23 +39,30 @@ jobs:
       run: npm install eslint --save-dev
       working-directory: ./apps/nft-bridge
 
-    # - name: Run Code Quality Check
-    #   run: npm run lint
-    #   working-directory: ./apps/nft-bridge
+    - name: Run Code Quality Check
+      run: npm run lint
+      working-directory: ./apps/nft-bridge
 
     # - name: Run Unit Tests
     #   run: npm test
     #   working-directory: ./apps/nft-bridge
 
-    - name: Ensure Docker is installed
-      run: |
-        docker --version
-        sudo service docker start
-
     - name: Build Docker Image
       run: |
            docker build -f apps/nft-bridge/Dockerfile -t nft-bridge:latest .
            docker image ls
+
+     # Run Docker Container
+    - name: Run Docker Container
+      run: |
+        # Start the container in detached mode
+        docker run -d -p 3000:3000 nft-bridge:latest
+
+        # Wait a few seconds for the container to be ready (optional, adjust if necessary)
+        sleep 10
+
+        # Test if the app is running by making an HTTP request to the container
+        curl --fail http://localhost:3000 || exit 1
 
     # - name: Push Docker Image
     #   run: |
