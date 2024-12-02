@@ -1,26 +1,17 @@
 /** @type {import('eslint').Linter.Config} */
 module.exports = [
     {
-      // Define plugins as an object
       plugins: {
-        'eslint-plugin-node': require('eslint-plugin-node'), // Correct format: plugin as an object
+        'eslint-plugin-node': require('eslint-plugin-node') // Make sure the plugin is included here
       },
       rules: {
-        // Place your custom rules here
+        // Add your custom rules here
       },
-      overrides: [
-        {
-          files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
-          rules: {},
-        },
-        {
-          files: ['*.ts', '*.tsx'],
-          rules: {},
-        },
-        {
-          files: ['*.js', '*.jsx'],
-          rules: {},
-        },
-      ],
-    },
+      files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
+      languageOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      }
+    }
   ];
+  
