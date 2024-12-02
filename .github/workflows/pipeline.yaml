@@ -53,9 +53,12 @@ jobs:
         docker --version
         sudo service docker start
 
-    - name: Build Docker Image
-      run: docker build -f devops_assaingment/apps/nft-bridge/Dockerfile -t nft-bridge:latest .
-      working-directory: ./apps/nft-bridge
+    - name: Debug: List files
+      run: ls -R
+
+    # - name: Build Docker Image
+    #   run: docker build -f devops_assaingment/apps/nft-bridge/Dockerfile -t nft-bridge:latest .
+    #   working-directory: ./apps/nft-bridge
 
     # - name: Push Docker Image
     #   run: |
