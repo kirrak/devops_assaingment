@@ -53,7 +53,7 @@ jobs:
         docker --version
         sudo service docker start
 
-    - name: Debug: List files
+    - name: List files
       run: ls -R
 
     # - name: Build Docker Image
