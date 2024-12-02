@@ -20,7 +20,9 @@ jobs:
         node-version: 18
 
     - name: Install Dependencies
-      run: npm install
+      run: |
+           npm install
+           npm install @nrwl/cli --save-dev
       working-directory: ./apps/nft-bridge
 
     - name: Fix Vulnerabilities
