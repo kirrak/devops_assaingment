@@ -53,19 +53,29 @@ jobs:
       run: |
            docker run -d --name nft-bridge-container -p 3000:3000 nft-bridge-1:latest
 
+    - name: Authenticate Docker to AWS ECR
+      env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+      run: |
+            aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+            aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+            aws configure set region $AWS_REGION
+            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com
     # - name: Push Docker Image
     #   run: |
     #     echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
     #     docker tag nft-bridge:latest your-docker-registry/nft-bridge:latest
     #     docker push your-docker-registry/nft-bridge:latest
-    - name: Authenticate Docker to AWS ECR
-      run: |
-          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+    # - name: Authenticate Docker to AWS ECR
+    #   run: |
+    #       aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
-    - name: Tag Docker Image
-      run: |
-          docker tag nft-bridge:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/nft-bridge:latest
+    # - name: Tag Docker Image
+    #   run: |
+    #       docker tag nft-bridge:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/nft-bridge:latest
 
-    - name: Push Docker Image to AWS ECR
-      run: |
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/nft-bridge:latest
+    # - name: Push Docker Image to AWS ECR
+    #   run: |
+    #       docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/nft-bridge:latest
