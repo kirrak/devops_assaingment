@@ -1,9 +1,9 @@
 name: NFT Bridge CI/CD Pipeline
 
 on:
-  push:
-    branches:
-      - kk_assignment
+  # push:
+  #   branches:
+  #     - kk_assignment
   pull_request:
 
 jobs:
