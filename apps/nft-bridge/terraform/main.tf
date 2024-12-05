@@ -82,7 +82,12 @@ resource "aws_iam_role_policy_attachment" "registry_read_policy" {
   role       = aws_iam_role.node_role.name
 }
 
-# CloudWatch Log Group for EKS cluster (this should be unique)
+# Ensure there is only one `aws_cloudwatch_log_group.this` resource defined here
 resource "aws_cloudwatch_log_group" "this" {
   name = "/aws/eks/default-eks-cluster/cluster"
 }
+
+# Comment out any other duplicate definitions of `aws_cloudwatch_log_group.this`
+# resource "aws_cloudwatch_log_group" "this" {
+#   name = "/aws/eks/default-eks-cluster/cluster"
+# }
