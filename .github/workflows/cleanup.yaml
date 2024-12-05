@@ -30,17 +30,21 @@ jobs:
         cd ./apps/nft-bridge/terraform  # Navigate to the Terraform directory
         terraform init
 
-    - name: Import IAM Role
+    - name: Add CloudWatch Log Group resource to Terraform
       run: |
-        cd ./apps/nft-bridge/terraform  # Ensure you're in the correct directory
-        terraform import aws_iam_role.node_role eks-node-group-role
+        echo 'resource "aws_cloudwatch_log_group" "this" { name = "/aws/eks/default-eks-cluster/cluster" }' >> ./apps/nft-bridge/terraform/main.tf
 
     - name: Import CloudWatch Log Group
       run: |
-        cd ./apps/nft-bridge/terraform  # Ensure you're in the correct directory
+        cd ./apps/nft-bridge/terraform
         terraform import aws_cloudwatch_log_group.this /aws/eks/default-eks-cluster/cluster
+
+    - name: Import IAM Role
+      run: |
+        cd ./apps/nft-bridge/terraform
+        terraform import aws_iam_role.node_role eks-node-group-role
 
     - name: Run Terraform Plan
       run: |
-        cd ./apps/nft-bridge/terraform  # Ensure you're in the correct directory
+        cd ./apps/nft-bridge/terraform
         terraform plan
