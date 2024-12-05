@@ -1,9 +1,9 @@
 name: Provision EKS Cluster
 
 on:
-   push:
-    branches:
-      - kk_assignment
+  #  push:
+  #   branches:
+  #     - kk_assignment
 
 jobs:
   terraform:
