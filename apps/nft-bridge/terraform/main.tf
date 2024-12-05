@@ -82,6 +82,7 @@ resource "aws_iam_role_policy_attachment" "registry_read_policy" {
   role       = aws_iam_role.node_role.name
 }
 
+# Existing CloudWatch Log Group resource
 resource "aws_cloudwatch_log_group" "this" {
   name = "/aws/eks/default-eks-cluster/cluster"
 }
