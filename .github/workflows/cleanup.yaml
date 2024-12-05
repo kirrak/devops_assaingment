@@ -1,0 +1,31 @@
+name: Cleanup EKS Resources
+
+on:
+   push:
+    branches:
+      - kk_assignment
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Configure AWS CLI
+      run: |
+        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+        aws configure set region $AWS_REGION
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ap-south-1 # Change this if your region is different
+
+    - name: Delete IAM Role
+      run: |
+        echo "Deleting IAM Role eks-node-group-role"
+        aws iam delete-role --role-name eks-node-group-role || echo "Role does not exist"
+
+    - name: Delete CloudWatch Log Group
+      run: |
+        echo "Deleting CloudWatch Log Group /aws/eks/default-eks-cluster/cluster"
+        aws logs delete-log-group --log-group-name /aws/eks/default-eks-cluster/cluster || echo "Log group does not exist"
