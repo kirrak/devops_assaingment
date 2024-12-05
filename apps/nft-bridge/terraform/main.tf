@@ -7,7 +7,7 @@ data "aws_vpc" "default" {
   default = true
 }
 
-# Fetch all subnets in the default VPC
+# Fetch the subnets for the default VPC
 data "aws_subnets" "default" {
   filter {
     name   = "vpc-id"
@@ -17,18 +17,20 @@ data "aws_subnets" "default" {
 
 module "eks" {
   source          = "terraform-aws-modules/eks/aws"
+  version         = "18.31.0" # Adjust the version as needed
   cluster_name    = var.cluster_name
   cluster_version = "1.26"
-  subnets         = data.aws_subnets.default.ids
   vpc_id          = data.aws_vpc.default.id
+  subnet_ids      = data.aws_subnets.default.ids # Corrected argument
 
-  node_groups = {
-    eks_nodes = {
+  # Configure managed node groups
+  managed_node_groups = {
+    example = {
+      name            = "example-node-group"
+      instance_types  = ["t3.medium"]
       desired_capacity = 2
-      max_capacity     = 3
       min_capacity     = 1
-
-      instance_types = ["t3.medium"]
+      max_capacity     = 3
     }
   }
 }
