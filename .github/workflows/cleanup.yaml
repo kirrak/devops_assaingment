@@ -26,13 +26,21 @@ jobs:
         aws-region: ap-south-1
 
     - name: Initialize Terraform
-      run: terraform init
+      run: |
+        cd ./apps/nft-bridge/terraform  # Navigate to the Terraform directory
+        terraform init
 
     - name: Import IAM Role
-      run: terraform import aws_iam_role.node_role eks-node-group-role
+      run: |
+        cd ./apps/nft-bridge/terraform  # Ensure you're in the correct directory
+        terraform import aws_iam_role.node_role eks-node-group-role
 
     - name: Import CloudWatch Log Group
-      run: terraform import aws_cloudwatch_log_group.this /aws/eks/default-eks-cluster/cluster
+      run: |
+        cd ./apps/nft-bridge/terraform  # Ensure you're in the correct directory
+        terraform import aws_cloudwatch_log_group.this /aws/eks/default-eks-cluster/cluster
 
     - name: Run Terraform Plan
-      run: terraform plan
+      run: |
+        cd ./apps/nft-bridge/terraform  # Ensure you're in the correct directory
+        terraform plan
