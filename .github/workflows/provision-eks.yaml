@@ -1,7 +1,9 @@
 name: Provision EKS Cluster
 
 on:
-  workflow_dispatch:
+   push:
+    branches:
+      - kk_assignment
 
 jobs:
   terraform:
