@@ -1,71 +1,40 @@
-# AWS Provider Configuration
-provider "aws" {
-  region = "ap-south-1"  # Change to your desired AWS region
+# Creating VPC
+module "vpc" {
+  source       = "../nft-bridge/modules/vpc"
+  cluster_name = var.cluster_name
+  env          = var.env
+  type         = var.type
 }
 
-# IAM Role Creation
-resource "aws_iam_role" "node_role" {
-  name               = "my-unique-eks-node-group-role"  # Change this to a unique name
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = "sts:AssumeRole"
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        }
-      }
-    ]
-  })
+# Creating security group
+module "security_groups" {
+  source       = "../nft-bridge/modules/security-group"
+  vpc_id       = module.vpc.vpc_id
+  cluster_name = var.cluster_name
+  env          = var.env
+  type         = var.type
 }
 
-# IAM Role Policy
-resource "aws_iam_role_policy" "node_role_policy" {
-  name = "my-node-role-policy"
-  role = aws_iam_role.node_role.id
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = [
-          "ec2:DescribeInstances",
-          "eks:DescribeCluster",
-          "logs:DescribeLogGroups",
-          "logs:DescribeLogStreams",
-          "logs:PutLogEvents",
-          "logs:CreateLogGroup",
-          "logs:CreateLogStream"
-        ]
-        Resource = "*"
-      }
-    ]
-  })
+# Creating IAM resources
+module "iam" {
+  source = "../nft-bridge/modules/iam"
 }
 
-# CloudWatch Log Group
-resource "aws_cloudwatch_log_group" "this" {
-  name              = "/aws/eks/my-unique-cluster-log-group"  # Change this to a unique name
-  retention_in_days = 30
-}
-
-# IAM User (GitHubActionsuser) Creation
-resource "aws_iam_user" "user" {
-  name = "GitHubActionsuser"  # Replace with your actual IAM user name
-}
-
-# Attach Policy to IAM User
-resource "aws_iam_policy_attachment" "attach_policy_to_user" {
-  name       = "attach-node-role-policy-to-user"
-  users      = ["GitHubActionsuser"]  # Replace with your actual IAM user name
-  policy_arn = aws_iam_role_policy.node_role_policy.arn  # Attach the policy created above
-}
-
-# Attach IAM Role to User (via AssumeRole permission)
-resource "aws_iam_role_policy_attachment" "attach_role_to_user" {
-  policy_arn = aws_iam_role.node_role.arn
-  role       = aws_iam_role.node_role.name
-  users      = ["GitHubActionsuser"]  # Attach the role to the IAM user
+# Creating EKS Cluster
+module "eks" {
+  source                = "../nft-bridge/modules/eks"
+  master_arn            = module.iam.master_arn
+  worker_arn            = module.iam.worker_arn
+  public_subnet_az1_id  = module.vpc.public_subnet_az1_id
+  public_subnet_az2_id  = module.vpc.public_subnet_az2_id
+  env                   = var.env
+  type                  = var.type
+  eks_security_group_id = module.security_groups.eks_security_group_id
+  instance_size         = var.instance_size
+  cluster_name          = var.cluster_name
+  worker_node_count     = var.instance_count
+  image_id              = var.ami_id
+  cluster_version       = var.cluster_version
+  vpc-cni-version       = var.vpc-cni-version
+  kube-proxy-version    = var.kube-proxy-version
 }

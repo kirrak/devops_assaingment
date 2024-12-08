@@ -41,8 +41,8 @@ jobs:
       working-directory: ./apps/nft-bridge/terraform
       run: terraform apply -auto-approve
 
-    - name: Output Cluster Details
-      working-directory: ./apps/nft-bridge/terraform
-      run: |
-        echo "Cluster Name: $(terraform output eks_cluster_name)"
-        echo "Cluster Endpoint: $(terraform output eks_cluster_endpoint)"
+    # - name: Output Cluster Details
+    #   working-directory: ./apps/nft-bridge/terraform
+    #   run: |
+    #     echo "Cluster Name: $(terraform output eks_cluster_name)"
+    #     echo "Cluster Endpoint: $(terraform output eks_cluster_endpoint)"
