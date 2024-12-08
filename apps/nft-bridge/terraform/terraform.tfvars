@@ -1,4 +1,4 @@
-cluster_name       = "pro-cluster"
+cluster_name       = "dev-cluster"
 instance_count     = 3
 instance_size      = "t2.micro"
 region             = "ap-south-1"
