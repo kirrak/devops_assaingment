@@ -37,6 +37,11 @@ jobs:
       working-directory: ./apps/nft-bridge/terraform
       run: terraform plan
 
+    - name: Force Unlock Terraform State (if lock exists)
+      if: failure()  # This ensures it runs only if the plan step fails
+      working-directory: ./apps/nft-bridge/terraform
+      run: terraform force-unlock 6d53da1f-913b-495d-c4e1-72f23c7d80d8
+
     - name: Apply Terraform
       working-directory: ./apps/nft-bridge/terraform
       run: terraform apply -auto-approve
