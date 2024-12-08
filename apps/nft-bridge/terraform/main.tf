@@ -1,6 +1,6 @@
 # Creating VPC
 module "vpc" {
-  source       = "../nft-bridge/modules/vpc"
+  source       = "../modules/vpc"
   cluster_name = var.cluster_name
   env          = var.env
   type         = var.type
@@ -8,7 +8,7 @@ module "vpc" {
 
 # Creating security group
 module "security_groups" {
-  source       = "../nft-bridge/modules/security-group"
+  source       = "../modules/security-group"
   vpc_id       = module.vpc.vpc_id
   cluster_name = var.cluster_name
   env          = var.env
@@ -17,12 +17,12 @@ module "security_groups" {
 
 # Creating IAM resources
 module "iam" {
-  source = "../nft-bridge/modules/iam"
+  source = "../modules/iam"
 }
 
 # Creating EKS Cluster
 module "eks" {
-  source                = "../nft-bridge/modules/eks"
+  source                = "../modules/eks"
   master_arn            = module.iam.master_arn
   worker_arn            = module.iam.worker_arn
   public_subnet_az1_id  = module.vpc.public_subnet_az1_id
