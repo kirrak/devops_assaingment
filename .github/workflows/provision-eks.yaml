@@ -38,6 +38,6 @@ jobs:
       run: terraform plan
 
     - name: Apply Terraform
-      if: success()
+      if: failure()
       working-directory: ./apps/nft-bridge/terraform
       run: terraform apply -auto-approve
