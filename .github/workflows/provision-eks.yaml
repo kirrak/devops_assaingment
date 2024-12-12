@@ -37,7 +37,10 @@ jobs:
       working-directory: ./apps/nft-bridge/terraform
       run: terraform plan
 
-    - name: Apply Terraform
-      if: failure()
+    # - name: Apply Terraform
+    #   if: failure()
+    #   working-directory: ./apps/nft-bridge/terraform
+    #   run: terraform apply -auto-approve
+    - name: Destroy Resources
       working-directory: ./apps/nft-bridge/terraform
-      run: terraform apply -auto-approve
+      run: terraform destroy -auto-approve
